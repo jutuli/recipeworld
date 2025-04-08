@@ -7,14 +7,19 @@ import {
 import Home from './pages/Home';
 import Recipe from './pages/Recipe';
 import Recipes from './pages/Recipes';
+import AboutUs from './pages/AboutUs';
+import Login from './pages/Login';
+import Layout from './layout/Layout';
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route>
+      <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="/recipe/:name" element={<Recipe />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/login" element={<Login />} />
       </Route>
     )
   );
