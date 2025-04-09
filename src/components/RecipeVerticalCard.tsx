@@ -1,53 +1,37 @@
-import React, { useEffect, useState } from "react";
-import supabase from "../utils/supabase";
+import React from "react";
 import { Link } from "react-router-dom";
 
-interface IRecipe {
+interface IRecipeProps {
   id: number;
   name: string;
   description: string;
   image_url: string;
 }
 
-const RecipeVerticalCard = () => {
-  const [favoriteRecipes, setFavoriteRecipes] = useState<IRecipe[]>([]);
-
-  const fetchData = async () => {
-    const { data: recipes } = await supabase.from("recipes").select("*");
-    if (recipes) {
-      setFavoriteRecipes(recipes.slice(0, 3));
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const RecipeVerticalCard: React.FC<IRecipeProps> = ({
+  id,
+  name,
+  description,
+  image_url,
+}) => {
   return (
-    <div className="favorite-recipes grid grid-cols-3 gap-4 p-4">
-      {favoriteRecipes.map((recipe) => (
-        <div
-          key={recipe.id}
-          className="recipe-card flex h-90 flex-col gap-2 rounded-lg bg-white shadow-lg"
-        >
-          <img
-            src={recipe.image_url}
-            alt={recipe.name}
-            className="h-36 w-full rounded-t-lg object-cover"
-          />
-          <div className="flex h-full flex-col justify-between">
-            <article className="flex flex-col px-2 text-left">
-              <h3 className="mt-2 text-xl font-bold">{recipe.name}</h3>
-              <p>{recipe.description}</p>
-            </article>
-            <Link to={`/recipe/${recipe.name}`} className="px-2">
-              <button className="font-sm mb-4 cursor-pointer rounded-full bg-amber-300 px-4 py-2">
-                View Recipe
-              </button>
-            </Link>
-          </div>
-        </div>
-      ))}
+    <div className="recipe-card flex h-90 flex-col gap-2 rounded-lg bg-white shadow-lg">
+      <img
+        src={image_url}
+        alt={name}
+        className="h-36 w-full rounded-t-lg object-cover"
+      />
+      <div className="flex h-full flex-col justify-between">
+        <article className="flex flex-col px-2 text-left">
+          <h3 className="mt-2 text-xl font-bold">{name}</h3>
+          <p>{description}</p>
+        </article>
+        <Link to={`/recipe/${name}`} className="px-2">
+          <button className="font-sm mb-4 cursor-pointer rounded-full bg-amber-300 px-4 py-2">
+            View Recipe
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
