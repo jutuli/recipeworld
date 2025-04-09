@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../utils/supabase";
 import RecipeVerticalCard from "./RecipeVerticalCard";
-import { IRecipe } from "../interfaces/IRecipe";
+import { useMainContext } from "../context/MainProvider";
 
 const FavoriteRecipes = () => {
-  const [favoriteRecipes, setFavoriteRecipes] = useState<IRecipe[]>([]);
+  const { favoriteRecipes, setFavoriteRecipes } = useMainContext();
 
   const fetchData = async () => {
     const { data: recipes } = await supabase
@@ -25,7 +25,7 @@ const FavoriteRecipes = () => {
     <>
       <h2 className="py-10 text-center text-3xl font-bold">Favorite Recipes</h2>
       <div className="favorite-recipes grid grid-cols-3 gap-4 p-4">
-        {favoriteRecipes.map((recipe) => (
+        {favoriteRecipes?.map((recipe) => (
           <RecipeVerticalCard key={recipe.id} {...recipe} />
         ))}
       </div>

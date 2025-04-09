@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import supabase from "../utils/supabase";
-import Recipes from "./Recipes";
+import { useMainContext } from "../context/MainProvider";
 
 interface IRecipe {
   id: string;
@@ -19,7 +19,7 @@ interface IRecipe {
 
 const Recipe = () => {
   const { name } = useParams();
-  const [recipe, setRecipe] = useState<IRecipe | null>(null);
+  const { currentRecipe, setCurrentRecipe } = useMainContext();
   const [loadingRecipe, setLoadingRecipe] = useState<boolean>(true);
 
   // Fetch the recipe data using the name parameter
@@ -32,7 +32,7 @@ const Recipe = () => {
     if (error) {
       console.error("Error fetching recipe:", error);
     } else {
-      setRecipe(recipe);
+      setCurrentRecipe(recipe);
     }
   };
 
@@ -45,28 +45,28 @@ const Recipe = () => {
     return <p className="py-10 text-center">Recipe is loading...</p>;
   }
 
-  if (!recipe) {
+  if (!currentRecipe) {
     return <p className="py-10 text-center">Recipe not found.</p>;
   }
 
   return (
     <div className="pb-10">
       <h2
-        style={{ backgroundImage: `url(${recipe.image_url})` }}
+        style={{ backgroundImage: `url(${currentRecipe.image_url})` }}
         className="bg-cover bg-center px-30 py-20 text-center text-3xl font-bold text-white"
       >
-        {recipe.name}
+        {currentRecipe.name}
       </h2>
       <div className="px-10">
         <h3 className="my-4 text-center text-xl italic">
-          {recipe.description}
+          {currentRecipe.description}
         </h3>
         <div className="recipe-details flex flex-col gap-4">
-          <p>This recipe is for {recipe.servings} servings.</p>
+          <p>This recipe is for {currentRecipe.servings} servings.</p>
           <div>
             <h4 className="pb-2 font-bold">Ingregients</h4>
             <ul>
-              {recipe.ingredients.map((ingredient, index) => (
+              {currentRecipe.ingredients.map((ingredient, index) => (
                 <li key={index} className="list-inside list-disc">
                   {ingredient}
                 </li>
@@ -75,7 +75,7 @@ const Recipe = () => {
           </div>
           <div>
             <h4 className="pb-2 font-bold">Instructions</h4>
-            <p>{recipe.instructions}</p>
+            <p>{currentRecipe.instructions}</p>
           </div>
         </div>
         <Link to={"/recipes"} className="mt-6 flex justify-end">

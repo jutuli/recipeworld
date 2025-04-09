@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import supabase from "../utils/supabase";
 import { IRecipe } from "../interfaces/IRecipe";
 import RecipeHorizontalCard from "./RecipeHorizontalCard";
+import { useMainContext } from "../context/MainProvider";
 
 const NewRecipes = () => {
-  const [newRecipes, setNewRecipes] = useState<IRecipe[] | null>(null);
+  const { newRecipes, setNewRecipes } = useMainContext();
 
   const fetchData = async () => {
     const { data: recipes } = await supabase
