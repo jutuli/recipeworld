@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import supabase from "../utils/supabase";
-import { IRecipe } from "../interfaces/IRecipe";
 import RecipeHorizontalCard from "./RecipeHorizontalCard";
 import { useMainContext } from "../context/MainProvider";
 

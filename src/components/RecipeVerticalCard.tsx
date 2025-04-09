@@ -20,7 +20,7 @@ const RecipeVerticalCard: React.FC<IRecipe> = ({
           <p>{description}</p>
         </article>
         <Link to={`/recipe/${name}`} className="px-2">
-          <button className="font-sm mb-4 cursor-pointer rounded-full bg-amber-300 px-4 py-2">
+          <button className="font-sm mb-4 cursor-pointer rounded-full bg-amber-300 px-4 py-2 hover:bg-amber-400">
             View Recipe
           </button>
         </Link>
