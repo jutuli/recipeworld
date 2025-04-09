@@ -28,22 +28,24 @@ const RecipeVerticalCard = () => {
       {favoriteRecipes.map((recipe) => (
         <div
           key={recipe.id}
-          className="recipe-card flex h-80 flex-col justify-between gap-2 rounded-lg bg-white shadow-lg"
+          className="recipe-card flex h-90 flex-col gap-2 rounded-lg bg-white shadow-lg"
         >
           <img
             src={recipe.image_url}
             alt={recipe.name}
-            className="h-40 w-full rounded-t-lg object-cover"
+            className="h-36 w-full rounded-t-lg object-cover"
           />
-          <article className="flex flex-col px-2 text-left">
-            <h3 className="mt-2 text-xl font-bold">{recipe.name}</h3>
-            <p>{recipe.description}</p>
-          </article>
-          <Link to={`/recipe/${recipe.name}`} className="px-2">
-            <button className="font-sm mb-4 cursor-pointer rounded-full bg-amber-300 px-4 py-2">
-              View Recipe
-            </button>
-          </Link>
+          <div className="flex h-full flex-col justify-between">
+            <article className="flex flex-col px-2 text-left">
+              <h3 className="mt-2 text-xl font-bold">{recipe.name}</h3>
+              <p>{recipe.description}</p>
+            </article>
+            <Link to={`/recipe/${recipe.name}`} className="px-2">
+              <button className="font-sm mb-4 cursor-pointer rounded-full bg-amber-300 px-4 py-2">
+                View Recipe
+              </button>
+            </Link>
+          </div>
         </div>
       ))}
     </div>
