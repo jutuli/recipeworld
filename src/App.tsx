@@ -3,13 +3,13 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
-} from 'react-router-dom';
-import Home from './pages/Home';
-import Recipe from './pages/Recipe';
-import Recipes from './pages/Recipes';
-import AboutUs from './pages/AboutUs';
-import Login from './pages/Login';
-import Layout from './layout/Layout';
+} from "react-router-dom";
+import Home from "./pages/Home";
+import Recipe from "./pages/Recipe";
+import Recipes from "./pages/Recipes";
+import AboutUs from "./pages/AboutUs";
+import Login from "./pages/Login";
+import Layout from "./layout/Layout";
 
 function App() {
   const router = createBrowserRouter(
@@ -20,8 +20,8 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/login" element={<Login />} />
-      </Route>
-    )
+      </Route>,
+    ),
   );
 
   return (
