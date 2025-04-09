@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../utils/supabase";
-import { Link } from "react-router-dom";
 import RecipeVerticalCard from "./RecipeVerticalCard";
-
-interface IRecipe {
-  id: number;
-  name: string;
-  description: string;
-  image_url: string;
-}
+import { IRecipe } from "../interfaces/IRecipe";
 
 const FavoriteRecipes = () => {
   const [favoriteRecipes, setFavoriteRecipes] = useState<IRecipe[]>([]);
 
   const fetchData = async () => {
-    const { data: recipes } = await supabase.from("recipes").select("*");
+    const { data: recipes } = await supabase
+      .from("recipes")
+      .select("*")
+      .order("created_at", { ascending: true })
+      .limit(3);
     if (recipes) {
       setFavoriteRecipes(recipes.slice(0, 3));
     }

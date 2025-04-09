@@ -1,21 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { IRecipe } from "../interfaces/IRecipe";
 
-interface IRecipeProps {
-  id: number;
-  name: string;
-  description: string;
-  image_url: string;
-}
-
-const RecipeVerticalCard: React.FC<IRecipeProps> = ({
-  id,
+const RecipeVerticalCard: React.FC<IRecipe> = ({
   name,
   description,
   image_url,
 }) => {
   return (
-    <div className="recipe-card flex h-90 flex-col gap-2 rounded-lg bg-white shadow-lg">
+    <div className="recipe-card flex h-90 flex-col gap-2 rounded-lg bg-slate-100 shadow-lg">
       <img
         src={image_url}
         alt={name}
