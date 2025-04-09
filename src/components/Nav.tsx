@@ -1,16 +1,43 @@
-import { Link } from 'react-router-dom';
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Nav = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex justify-between items-center bg-white px-4 py-8 border-t-12 border-t-amber-300">
-      <h3 className="font-bold">RecipeWorld</h3>
-      <div className="flex items-center gap-10 mx-4">
+    <div className="flex items-center justify-between border-t-12 border-t-amber-300 bg-white px-4 py-8">
+      <h3
+        className="cursor-pointer text-xl font-bold"
+        onClick={() => navigate("/")}
+      >
+        RecipeWorld
+      </h3>
+      <div className="mx-4 flex items-center gap-10">
         <ul className="flex gap-4">
-          <Link to={'/'}>Home</Link>
-          <Link to={'/recipes'}>Recipes</Link>
-          <Link to={'/about-us'}>About Us</Link>
+          <NavLink
+            to={"/"}
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to={"/recipes"}
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            Recipes
+          </NavLink>
+          <NavLink
+            to={"/about-us"}
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            About Us
+          </NavLink>
         </ul>
-        <Link to={'/login'}>Login</Link>
+        <NavLink
+          to={"/login"}
+          className={({ isActive }) => (isActive ? "font-bold" : "")}
+        >
+          Login
+        </NavLink>
       </div>
     </div>
   );
