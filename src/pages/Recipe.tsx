@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import supabase from "../utils/supabase";
 import { useMainContext } from "../context/MainProvider";
+import EditRecipe from "../components/EditRecipe";
 
 interface IRecipe {
   id: string;
@@ -61,6 +62,9 @@ const Recipe = () => {
         <h3 className="my-4 text-center text-xl italic">
           {currentRecipe.description}
         </h3>
+        <div className="flex justify-end">
+          <EditRecipe />
+        </div>
         <div className="recipe-details flex flex-col gap-4">
           <p>This recipe is for {currentRecipe.servings} servings.</p>
           <div>
@@ -79,8 +83,8 @@ const Recipe = () => {
           </div>
         </div>
         <Link to={"/recipes"} className="mt-6 flex justify-end">
-          <button className="font-sm cursor-pointer rounded-full bg-amber-300 px-4 py-2">
-            ← All Recipes
+          <button className="font-sm cursor-pointer rounded-full bg-amber-300 px-4 py-2 hover:bg-amber-400">
+            ←
           </button>
         </Link>
       </div>
