@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import AddRecipe from "./AddRecipe";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -32,12 +33,13 @@ const Nav = () => {
             About Us
           </NavLink>
         </ul>
-        <NavLink
+        {/* <NavLink
           to={"/login"}
           className={({ isActive }) => (isActive ? "font-bold" : "")}
         >
           Login
-        </NavLink>
+        </NavLink> */}
+        <AddRecipe />
       </div>
     </div>
   );
