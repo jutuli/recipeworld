@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import supabase from "../utils/supabase";
 import { useMainContext } from "../context/MainProvider";
 import EditRecipe from "../components/EditRecipe";
-import { set } from "react-hook-form";
 
 const Recipe = () => {
   const { id } = useParams();
