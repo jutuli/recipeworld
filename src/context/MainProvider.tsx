@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { ICategory } from "../interfaces/ICategory";
 import { IRecipe } from "../interfaces/IRecipe";
 
@@ -6,13 +6,17 @@ interface IMainContext {
   categories: ICategory[] | null;
   favoriteRecipes: IRecipe[] | null;
   newRecipes: IRecipe[] | null;
-  modalMode: "add" | "edit" | "delete";
+  modalMode: "add" | "edit";
   currentRecipe: IRecipe | null;
+  showModal: boolean;
+  refreshRecipe: boolean;
   setCategories: (categories: ICategory[] | null) => void;
   setFavoriteRecipes: (recipes: IRecipe[] | null) => void;
   setNewRecipes: (recipes: IRecipe[] | null) => void;
-  setModalMode: (mode: "add" | "edit" | "delete") => void;
+  setModalMode: (mode: "add" | "edit") => void;
   setCurrentRecipe: (recipe: IRecipe | null) => void;
+  setShowModal: (show: boolean) => void;
+  setRefreshRecipe: (refresh: boolean) => void;
 }
 
 export const mainContext = createContext<IMainContext | undefined>(undefined);
@@ -31,8 +35,10 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
     null,
   );
   const [newRecipes, setNewRecipes] = useState<IRecipe[] | null>(null);
-  const [modalMode, setModalMode] = useState<"add" | "edit" | "delete">("add");
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
   const [currentRecipe, setCurrentRecipe] = useState<IRecipe | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [refreshRecipe, setRefreshRecipe] = useState(false);
 
   const contextValue = {
     categories,
@@ -40,11 +46,15 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
     newRecipes,
     modalMode,
     currentRecipe,
+    showModal,
+    refreshRecipe,
     setCategories,
     setFavoriteRecipes,
     setNewRecipes,
     setModalMode,
     setCurrentRecipe,
+    setShowModal,
+    setRefreshRecipe,
   };
 
   return (

@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import supabase from "../utils/supabase";
+import React from "react";
 import { IRecipe } from "../interfaces/IRecipe";
 import { Link } from "react-router-dom";
 
 const RecipeHorizontalCard: React.FC<IRecipe> = ({
+  id,
   name,
   description,
   image_url,
@@ -20,7 +20,7 @@ const RecipeHorizontalCard: React.FC<IRecipe> = ({
           <h3 className="mt-2 text-xl font-bold">{name}</h3>
           <p>{description}</p>
         </article>
-        <Link to={`/recipe/${name}`} className="px-2">
+        <Link to={`/recipe/${id}`} className="px-2">
           <button className="font-sm mb-4 cursor-pointer rounded-full bg-amber-300 px-4 py-2 hover:bg-amber-400">
             View Recipe
           </button>

@@ -3,24 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import supabase from "../utils/supabase";
 import { useMainContext } from "../context/MainProvider";
 import EditRecipe from "../components/EditRecipe";
-
-interface IRecipe {
-  id: string;
-  name: string;
-  description: string;
-  servings: number;
-  instructions: string;
-  ingredients: string[];
-  category: {
-    id: number;
-    name: string;
-  };
-  image_url: string;
-}
+import { set } from "react-hook-form";
 
 const Recipe = () => {
-  const { name } = useParams();
-  const { currentRecipe, setCurrentRecipe } = useMainContext();
+  const { id } = useParams();
+  const { currentRecipe, setCurrentRecipe, refreshRecipe, setRefreshRecipe } =
+    useMainContext();
   const [loadingRecipe, setLoadingRecipe] = useState<boolean>(true);
 
   // Fetch the recipe data using the name parameter
@@ -28,19 +16,21 @@ const Recipe = () => {
     const { data: recipe, error } = await supabase
       .from("recipes")
       .select("*, category: categories(name)")
-      .eq("name", name)
+      .eq("id", id)
       .single();
     if (error) {
       console.error("Error fetching recipe:", error);
     } else {
       setCurrentRecipe(recipe);
     }
+    setLoadingRecipe(false);
   };
 
   useEffect(() => {
+    setLoadingRecipe(true);
     fetchRecipe();
-    setLoadingRecipe(false);
-  }, []);
+    setRefreshRecipe(false);
+  }, [refreshRecipe]);
 
   if (loadingRecipe) {
     return <p className="py-10 text-center">Recipe is loading...</p>;

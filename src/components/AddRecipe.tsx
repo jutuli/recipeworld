@@ -1,10 +1,8 @@
-import { useState } from "react";
 import CRUDRecipeModal from "./CRUDRecipeModal";
 import { useMainContext } from "../context/MainProvider";
 
 const AddRecipe = () => {
-  const [showModal, setShowModal] = useState(false);
-  const { setModalMode } = useMainContext();
+  const { setModalMode, showModal, setShowModal } = useMainContext();
 
   return (
     <div>
@@ -18,7 +16,7 @@ const AddRecipe = () => {
         {" "}
         &#10133; Add Recipe
       </button>
-      <CRUDRecipeModal open={showModal} onClose={() => setShowModal(false)} />
+      {showModal && <CRUDRecipeModal />}
     </div>
   );
 };

@@ -1,10 +1,8 @@
-import React, { useState } from "react";
 import CRUDRecipeModal from "./CRUDRecipeModal";
 import { useMainContext } from "../context/MainProvider";
 
 const EditRecipe = () => {
-  const [showModal, setShowModal] = useState(false);
-  const { setModalMode } = useMainContext();
+  const { setModalMode, setShowModal, showModal } = useMainContext();
 
   return (
     <div>
@@ -18,7 +16,7 @@ const EditRecipe = () => {
         {" "}
         &#9998; Edit
       </button>
-      <CRUDRecipeModal open={showModal} onClose={() => setShowModal(false)} />
+      {showModal && <CRUDRecipeModal />}
     </div>
   );
 };

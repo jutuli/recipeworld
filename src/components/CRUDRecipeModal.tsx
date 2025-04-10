@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import supabase from "../utils/supabase";
 import { useMainContext } from "../context/MainProvider";
 import { useNavigate } from "react-router-dom";
 
-interface IAddRecipeModalProps {
-  open: boolean;
-  onClose: () => void;
-}
-
-const CRUDRecipeModal = ({ open, onClose }: IAddRecipeModalProps) => {
-  if (!open) return null;
-
+const CRUDRecipeModal = () => {
   const navigate = useNavigate();
-
-  const { categories, setCategories, modalMode, currentRecipe } =
-    useMainContext();
+  const {
+    categories,
+    setCategories,
+    modalMode,
+    currentRecipe,
+    showModal,
+    setShowModal,
+    setRefreshRecipe,
+  } = useMainContext();
+  if (!showModal) return null;
 
   const fetchCategories = async () => {
     const { data: categories } = await supabase.from("categories").select("*");
@@ -24,8 +24,18 @@ const CRUDRecipeModal = ({ open, onClose }: IAddRecipeModalProps) => {
   };
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    if (showModal) {
+      fetchCategories();
+    }
+  }, [showModal]);
+
+  // Handle Modal Close
+  const handleClose = () => {
+    setShowModal(false);
+    if (modalMode === "add") {
+      navigate("/recipes");
+    }
+  };
 
   // Handle Form Submit to add or edit a recipe
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,13 +58,30 @@ const CRUDRecipeModal = ({ open, onClose }: IAddRecipeModalProps) => {
       created_at: new Date(),
       category_id: formData.get("category_id") as string,
     };
-    const { error } = await supabase.from("recipes").insert([recipeData]);
-    if (error) {
-      console.error("Error inserting recipe:", error);
-    } else {
-      console.log("Recipe added successfully");
-      onClose();
+    // If edit mode, the recipe is being updated
+    if (modalMode === "edit" && currentRecipe?.id) {
+      const { error } = await supabase
+        .from("recipes")
+        .update(recipeData)
+        .eq("id", currentRecipe.id);
+      if (error) {
+        console.error("Error updating recipe:", error);
+      } else {
+        console.log("Recipe updated successfully");
+      }
     }
+
+    // if add mode, the recipe is being added
+    else {
+      const { error } = await supabase.from("recipes").insert([recipeData]);
+      if (error) {
+        console.error("Error inserting recipe:", error);
+      } else {
+        console.log("Recipe added successfully");
+      }
+    }
+    setRefreshRecipe(true);
+    handleClose();
   };
 
   // Handle Delete Recipe
@@ -68,13 +95,13 @@ const CRUDRecipeModal = ({ open, onClose }: IAddRecipeModalProps) => {
         console.error("Error deleting recipe:", error);
       } else {
         console.log("Recipe deleted successfully");
-        onClose();
         navigate("/recipes");
       }
+      handleClose();
     }
   };
 
-  return (
+  return showModal ? (
     <div className="fixed top-1/6 left-1/4 h-2/3 w-1/2 rounded-lg bg-slate-50 p-4 shadow-lg">
       <div className="flex items-start justify-between">
         {modalMode === "add" ? (
@@ -82,7 +109,7 @@ const CRUDRecipeModal = ({ open, onClose }: IAddRecipeModalProps) => {
         ) : (
           <h1 className="text-2xl font-bold">Edit Recipe</h1>
         )}
-        <button onClick={onClose} className="cursor-pointer">
+        <button onClick={handleClose} className="cursor-pointer">
           ×
         </button>
       </div>
@@ -161,7 +188,7 @@ const CRUDRecipeModal = ({ open, onClose }: IAddRecipeModalProps) => {
         </div>
       )}
     </div>
-  );
+  ) : null;
 };
 
 export default CRUDRecipeModal;
