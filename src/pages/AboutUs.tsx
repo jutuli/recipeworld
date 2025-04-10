@@ -1,5 +1,3 @@
-import React from 'react';
-
 const AboutUs = () => {
   return (
     <article className="about-us p-12">

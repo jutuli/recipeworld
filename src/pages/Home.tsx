@@ -1,4 +1,3 @@
-import React from "react";
 import FavoriteRecipes from "../components/FavoriteRecipes.tsx";
 
 const Home = () => {

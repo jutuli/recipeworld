@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import supabase from "../utils/supabase";
 import RecipeVerticalCard from "./RecipeVerticalCard";
 import { useMainContext } from "../context/MainProvider";
