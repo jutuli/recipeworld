@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import CRUDRecipeModal from "./CRUDRecipeModal";
 import { useMainContext } from "../context/MainProvider";
 
-const AddRecipe = () => {
+const EditRecipe = () => {
   const [showModal, setShowModal] = useState(false);
   const { setModalMode } = useMainContext();
 
@@ -11,16 +11,16 @@ const AddRecipe = () => {
       <button
         onClick={() => {
           setShowModal(true);
-          setModalMode("add");
+          setModalMode("edit");
         }}
-        className="cursor-pointer rounded-full bg-amber-300 px-4 py-2 font-semibold hover:bg-amber-400"
+        className="cursor-pointer rounded-full bg-amber-300 px-4 py-2 hover:bg-amber-400"
       >
         {" "}
-        &#10133; Add Recipe
+        &#9998; Edit
       </button>
       <CRUDRecipeModal open={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 };
 
-export default AddRecipe;
+export default EditRecipe;
