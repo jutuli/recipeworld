@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import supabase from "../utils/supabase";
 import { useContext, useRef } from "react";
-import { mainContext, useMainContext } from "../context/MainProvider";
+import { mainContext } from "../context/MainProvider";
 import { IUser } from "../interfaces/IUser";
-import { set } from "react-hook-form";
 
 interface ILoginProps {
   setUser: (user: IUser | null) => void;
