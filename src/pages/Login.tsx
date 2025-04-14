@@ -1,11 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import supabase from "../utils/supabase";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import { mainContext, useMainContext } from "../context/MainProvider";
+import { IUser } from "../interfaces/IUser";
+import { set } from "react-hook-form";
+
+interface ILoginProps {
+  setUser: (user: IUser | null) => void;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+}
 
 const Login = () => {
   const navigate = useNavigate();
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  const { setUser, setIsLoggedIn } = useContext(mainContext) as ILoginProps;
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -13,7 +23,7 @@ const Login = () => {
       // email and password are being validated with supabase
       const form = e.currentTarget as HTMLFormElement;
 
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: form.email.value,
         password: form.password.value,
       });
@@ -21,9 +31,19 @@ const Login = () => {
         console.error("Login error:", error.message);
         return;
       }
-      // redirect to profile page
-      navigate("/profile");
 
+      if (data.user) {
+        const userData: IUser = {
+          id: data.user.id,
+          email: data.user.email || "",
+        };
+
+        setUser(userData);
+        setIsLoggedIn(true);
+
+        // redirect to profile page
+        navigate("/profile");
+      }
       console.log("Login form submitted");
     } catch (error) {
       console.error("Error during login:", error);
@@ -41,6 +61,14 @@ const Login = () => {
         console.error("Registration error:", error.message);
         return;
       }
+      // set user data in context
+      const userData: IUser = {
+        id: form.email.value,
+        email: form.email.value,
+      };
+      setUser(userData);
+      setIsLoggedIn(true);
+
       // redirect to profile page
       navigate("/profile");
       console.log("Register form submitted");
