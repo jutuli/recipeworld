@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { ICategory } from "../interfaces/ICategory";
 import { IRecipe } from "../interfaces/IRecipe";
+import { IUser } from "../interfaces/IUser";
 
 interface IMainContext {
   categories: ICategory[] | null;
@@ -10,6 +11,8 @@ interface IMainContext {
   currentRecipe: IRecipe | null;
   showModal: boolean;
   refreshRecipe: boolean;
+  user: IUser | null;
+  isLoggedIn: boolean;
   setCategories: (categories: ICategory[] | null) => void;
   setFavoriteRecipes: (recipes: IRecipe[] | null) => void;
   setNewRecipes: (recipes: IRecipe[] | null) => void;
@@ -17,6 +20,8 @@ interface IMainContext {
   setCurrentRecipe: (recipe: IRecipe | null) => void;
   setShowModal: (show: boolean) => void;
   setRefreshRecipe: (refresh: boolean) => void;
+  setUser: (user: IUser | null) => void;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
 export const mainContext = createContext<IMainContext | undefined>(undefined);
@@ -39,6 +44,8 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentRecipe, setCurrentRecipe] = useState<IRecipe | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [refreshRecipe, setRefreshRecipe] = useState(false);
+  const [user, setUser] = useState<IUser | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const contextValue = {
     categories,
@@ -48,6 +55,8 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
     currentRecipe,
     showModal,
     refreshRecipe,
+    user,
+    isLoggedIn,
     setCategories,
     setFavoriteRecipes,
     setNewRecipes,
@@ -55,6 +64,8 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
     setCurrentRecipe,
     setShowModal,
     setRefreshRecipe,
+    setUser,
+    setIsLoggedIn,
   };
 
   return (
