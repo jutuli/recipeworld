@@ -23,7 +23,7 @@ const FavoriteRecipes = () => {
 
   return (
     <>
-      <h2 className="pt-10 pb-4 text-center text-3xl font-bold">
+      <h2 className="pt-8 pb-4 text-center text-3xl font-bold">
         Favorite Recipes
       </h2>
       <div className="favorite-recipes grid grid-cols-3 gap-4 p-4">
