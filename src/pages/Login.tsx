@@ -60,6 +60,7 @@ const Login = () => {
         console.error("Registration error:", error.message);
         return;
       }
+
       // set user data in context
       const userData: IUser = {
         id: form.email.value,
