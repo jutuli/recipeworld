@@ -3,7 +3,7 @@ import NewRecipes from "../components/NewRecipes";
 
 const Recipes = () => {
   return (
-    <div>
+    <div className="w-full">
       <FavoriteRecipes />
       <NewRecipes />
     </div>

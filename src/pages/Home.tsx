@@ -2,7 +2,7 @@ import FavoriteRecipes from "../components/FavoriteRecipes.tsx";
 
 const Home = () => {
   return (
-    <div>
+    <div className="w-full">
       <FavoriteRecipes />
     </div>
   );

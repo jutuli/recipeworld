@@ -40,7 +40,7 @@ const Recipe = () => {
   }
 
   return (
-    <div className="pb-10">
+    <div className="w-full pb-10">
       <h2
         style={{ backgroundImage: `url(${currentRecipe.image_url})` }}
         className="bg-cover bg-center px-30 py-20 text-center text-3xl font-bold text-white"
