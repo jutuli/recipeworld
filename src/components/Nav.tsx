@@ -33,13 +33,12 @@ const Nav = () => {
             About Us
           </NavLink>
         </ul>
-        {/* <NavLink
+        <NavLink
           to={"/login"}
-          className={({ isActive }) => (isActive ? "font-bold" : "")}
+          className="cursor-pointer rounded-full bg-amber-300 px-4 py-2 font-bold hover:bg-amber-400"
         >
           Login
-        </NavLink> */}
-        <AddRecipe />
+        </NavLink>
       </div>
     </div>
   );
