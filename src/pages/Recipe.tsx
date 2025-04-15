@@ -1,13 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import supabase from "../utils/supabase";
-import { useMainContext } from "../context/MainProvider";
+import { mainContext } from "../context/MainProvider";
 import EditRecipe from "../components/EditRecipe";
+import { IRecipe } from "../interfaces/IRecipe";
+
+interface IRecipeProps {
+  currentRecipe: IRecipe | null;
+  setCurrentRecipe: (recipe: IRecipe | null) => void;
+  refreshRecipe: boolean;
+  setRefreshRecipe: (refreshRecipe: boolean) => void;
+  isLoggedIn: boolean;
+}
 
 const Recipe = () => {
   const { id } = useParams();
-  const { currentRecipe, setCurrentRecipe, refreshRecipe, setRefreshRecipe } =
-    useMainContext();
+  const {
+    currentRecipe,
+    setCurrentRecipe,
+    refreshRecipe,
+    setRefreshRecipe,
+    isLoggedIn,
+  } = useContext(mainContext) as IRecipeProps;
+
   const [loadingRecipe, setLoadingRecipe] = useState<boolean>(true);
 
   // Fetch the recipe data using the name parameter
@@ -51,9 +66,11 @@ const Recipe = () => {
         <h3 className="my-4 text-center text-xl italic">
           {currentRecipe.description}
         </h3>
-        <div className="flex justify-end">
-          <EditRecipe />
-        </div>
+        {isLoggedIn && (
+          <div className="flex justify-end">
+            <EditRecipe />
+          </div>
+        )}
         <div className="recipe-details flex flex-col gap-4">
           <p>This recipe is for {currentRecipe.servings} servings.</p>
           <div>
