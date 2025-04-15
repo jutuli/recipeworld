@@ -1,8 +1,15 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import AddRecipe from "./AddRecipe";
+import { mainContext } from "../context/MainProvider";
+import { useContext } from "react";
+
+interface INavProps {
+  isLoggedIn: boolean;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+}
 
 const Nav = () => {
   const navigate = useNavigate();
+  const { isLoggedIn, setIsLoggedIn } = useContext(mainContext) as INavProps;
 
   return (
     <div className="flex items-center justify-between border-t-12 border-t-amber-300 bg-white px-4 py-8">
@@ -33,12 +40,23 @@ const Nav = () => {
             About Us
           </NavLink>
         </ul>
-        <NavLink
-          to={"/login"}
-          className="cursor-pointer rounded-full bg-amber-300 px-4 py-2 font-bold hover:bg-amber-400"
-        >
-          Login
-        </NavLink>
+        {!isLoggedIn && (
+          <NavLink
+            to={"/login"}
+            className="cursor-pointer rounded-full bg-amber-300 px-4 py-2 font-bold hover:bg-amber-400"
+          >
+            Login
+          </NavLink>
+        )}
+        {isLoggedIn && (
+          <NavLink
+            to={"/"}
+            className="cursor-pointer rounded-full bg-amber-300 px-4 py-2 font-bold hover:bg-amber-400"
+            onClick={() => setIsLoggedIn(false)}
+          >
+            Log Out
+          </NavLink>
+        )}
       </div>
     </div>
   );
