@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { IUser } from "../interfaces/IUser";
 import { mainContext } from "../context/MainProvider";
 import { Link } from "react-router-dom";
