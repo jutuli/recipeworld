@@ -39,6 +39,12 @@ const Nav = () => {
           >
             About Us
           </NavLink>
+          <NavLink
+            to={"/profile"}
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            Profile
+          </NavLink>
         </ul>
         {!isLoggedIn && (
           <NavLink
