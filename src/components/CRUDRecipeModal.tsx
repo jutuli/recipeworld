@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import supabase from "../utils/supabase";
 import { useMainContext } from "../context/MainProvider";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CRUDRecipeModal = () => {
   const navigate = useNavigate();
@@ -15,6 +15,8 @@ const CRUDRecipeModal = () => {
     setRefreshRecipe,
   } = useMainContext();
   if (!showModal) return null;
+
+  const location = useLocation();
 
   const fetchCategories = async () => {
     const { data: categories } = await supabase.from("categories").select("*");
@@ -32,9 +34,6 @@ const CRUDRecipeModal = () => {
   // Handle Modal Close
   const handleClose = () => {
     setShowModal(false);
-    if (modalMode === "add") {
-      navigate("/recipes");
-    }
   };
 
   // Handle Form Submit to add or edit a recipe
@@ -68,6 +67,7 @@ const CRUDRecipeModal = () => {
         console.error("Error updating recipe:", error);
       } else {
         console.log("Recipe updated successfully");
+        navigate("/recipe/" + currentRecipe.id);
       }
     }
 
@@ -78,6 +78,7 @@ const CRUDRecipeModal = () => {
         console.error("Error inserting recipe:", error);
       } else {
         console.log("Recipe added successfully");
+        navigate("/recipes");
       }
     }
     setRefreshRecipe(true);
