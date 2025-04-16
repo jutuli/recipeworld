@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import supabase from "../utils/supabase";
 import { useMainContext } from "../context/MainProvider";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CRUDRecipeModal = () => {
   const navigate = useNavigate();
@@ -15,8 +15,6 @@ const CRUDRecipeModal = () => {
     setRefreshRecipe,
   } = useMainContext();
   if (!showModal) return null;
-
-  const location = useLocation();
 
   const fetchCategories = async () => {
     const { data: categories } = await supabase.from("categories").select("*");
