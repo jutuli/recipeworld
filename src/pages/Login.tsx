@@ -35,6 +35,8 @@ const Login = () => {
         const userData: IUser = {
           id: data.user.id,
           email: data.user.email || "",
+          firstName: data.user.user_metadata.firstName || "",
+          lastName: data.user.user_metadata.lastName || "",
         };
 
         setUser(userData);
@@ -46,34 +48,6 @@ const Login = () => {
       console.log("Login form submitted");
     } catch (error) {
       console.error("Error during login:", error);
-    }
-  };
-
-  const handleRegister = async (form: HTMLFormElement) => {
-    // send new user data to supabase
-    try {
-      const { error } = await supabase.auth.signUp({
-        email: form.email.value,
-        password: form.password.value,
-      });
-      if (error) {
-        console.error("Registration error:", error.message);
-        return;
-      }
-
-      // set user data in context
-      const userData: IUser = {
-        id: form.email.value,
-        email: form.email.value,
-      };
-      setUser(userData);
-      setIsLoggedIn(true);
-
-      // redirect to profile page
-      navigate("/profile");
-      console.log("Register form submitted");
-    } catch (error) {
-      console.error("Error during registration:", error);
     }
   };
 
@@ -105,18 +79,16 @@ const Login = () => {
         >
           Login
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            if (formRef.current) {
-              handleRegister(formRef.current);
-            }
-          }}
-          className="cursor-pointer rounded bg-slate-200 p-2 font-bold hover:bg-slate-300"
-        >
-          Register
-        </button>
       </form>
+      <p className="text-sm italic">
+        Don't have an account? Click{" "}
+        <span
+          onClick={() => navigate("/register")}
+          className="cursor-pointer font-bold text-amber-400 not-italic"
+        >
+          here
+        </span>
+      </p>
     </div>
   );
 };

@@ -11,6 +11,7 @@ import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
 import Layout from "./layout/Layout";
 import Profile from "./pages/Profile";
+import Register from "./pages/Register";
 
 function App() {
   const router = createBrowserRouter(
@@ -21,6 +22,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
       </Route>,
     ),
