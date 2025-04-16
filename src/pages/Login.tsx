@@ -35,8 +35,8 @@ const Login = () => {
         const userData: IUser = {
           id: data.user.id,
           email: data.user.email || "",
-          firstName: data.user.user_metadata.firstName || "",
-          lastName: data.user.user_metadata.lastName || "",
+          firstName: data.user.user_metadata.first_name || "",
+          lastName: data.user.user_metadata.last_name || "",
         };
 
         setUser(userData);
