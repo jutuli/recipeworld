@@ -57,7 +57,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col px-4">
+    <div className="flex w-full grow flex-col px-4">
       {isLoggedIn ? (
         <div className="align-start flex flex-col">
           <h1 className="mb-4 text-lg font-bold">Profile</h1>
@@ -151,7 +151,7 @@ const Profile = () => {
           )}
         </div>
       ) : (
-        <>
+        <div className="flex grow flex-col items-center justify-center">
           <p className="mb-4">
             Oops, you can only view this page when logged in
           </p>
@@ -161,7 +161,7 @@ const Profile = () => {
           >
             Login
           </Link>
-        </>
+        </div>
       )}
     </div>
   );
