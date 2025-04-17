@@ -53,10 +53,18 @@ const Recipe = () => {
   return (
     <div className="w-full pb-10">
       <h2
-        style={{ backgroundImage: `url(${currentRecipe.image_url})` }}
-        className="bg-cover bg-center px-30 py-20 text-center text-3xl font-bold text-white"
+        style={{
+          backgroundImage: `url(${currentRecipe.image_url})`,
+          position: "relative",
+        }}
+        className="relative bg-cover bg-center px-30 py-20 text-center text-3xl font-bold text-white"
       >
-        {currentRecipe.name}
+        {" "}
+        <div
+          className="absolute inset-0 bg-black opacity-40"
+          style={{ zIndex: 1 }}
+        ></div>
+        <span className="relative z-10">{currentRecipe.name}</span>
       </h2>
       <div className="px-10">
         <h3 className="my-4 text-center text-xl italic">
