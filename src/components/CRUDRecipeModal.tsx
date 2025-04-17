@@ -132,7 +132,7 @@ const CRUDRecipeModal = () => {
   };
 
   return showModal ? (
-    <div className="fixed top-1/6 left-1/4 h-2/3 w-1/2 rounded-lg bg-slate-50 p-4 shadow-lg">
+    <div className="fixed top-1/6 left-1/4 z-2000 h-2/3 w-1/2 rounded-lg bg-slate-50 p-4 shadow-lg">
       <div className="flex items-start justify-between">
         {modalMode === "add" ? (
           <h1 className="text-2xl font-bold">Add Recipe</h1>
