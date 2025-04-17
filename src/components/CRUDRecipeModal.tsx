@@ -40,6 +40,33 @@ const CRUDRecipeModal = () => {
     // send data to supabase
     const formData = new FormData(e.currentTarget as HTMLFormElement);
 
+    // If image was uploaded, get the file and upload it to Supabase Storage
+    const file = formData.get("recipe_image") as File;
+    let imageUrl = "";
+
+    // If an image was uploaded
+    if (file && file.name) {
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from("recipe-images") // bucket name
+        .upload(filePath, file);
+
+      if (uploadError) {
+        console.error("Image upload failed:", uploadError);
+        return;
+      }
+
+      // Get public URL of the uploaded image
+      const { data } = supabase.storage
+        .from("recipe-images")
+        .getPublicUrl(filePath);
+      imageUrl = data.publicUrl;
+    }
+
     const ingredientsString = formData.get("ingredients") as string;
     const ingredientsArray = ingredientsString
       .split(",")
@@ -51,9 +78,9 @@ const CRUDRecipeModal = () => {
       servings: Number(formData.get("servings")),
       ingredients: ingredientsArray,
       instructions: formData.get("instructions"),
-      image_url: formData.get("image_url") as string,
-      created_at: new Date(),
+      image_url: imageUrl,
       category_id: formData.get("category_id") as string,
+      created_at: new Date(),
     };
     // If edit mode, the recipe is being updated
     if (modalMode === "edit" && currentRecipe?.id) {
@@ -73,7 +100,7 @@ const CRUDRecipeModal = () => {
     else {
       const { error } = await supabase.from("recipes").insert([recipeData]);
       if (error) {
-        console.error("Error inserting recipe:", error);
+        console.error("Error inserting recipe:", error.message);
       } else {
         console.log("Recipe added successfully");
         navigate("/recipes");
@@ -150,10 +177,9 @@ const CRUDRecipeModal = () => {
           className="mb-2 rounded-lg border border-slate-300 p-2"
         />
         <input
-          type="text"
-          name="image_url"
-          placeholder="Image URL"
-          defaultValue={modalMode === "edit" ? currentRecipe?.image_url : ""}
+          type="file"
+          name="recipe_image"
+          placeholder="Image Upload"
           className="mb-2 rounded-lg border border-slate-300 p-2"
         />
         <select
