@@ -42,7 +42,11 @@ const CRUDRecipeModal = () => {
 
     // If image was uploaded, get the file and upload it to Supabase Storage
     const file = formData.get("recipe_image") as File;
-    let imageUrl = "";
+    // If in edit mode, get the current image URL, if in add mode, it will be empty
+    let imageUrl =
+      modalMode === "edit" && currentRecipe?.image_url
+        ? currentRecipe.image_url
+        : "";
 
     // If an image was uploaded
     if (file && file.name) {
@@ -146,12 +150,14 @@ const CRUDRecipeModal = () => {
           placeholder="Recipe Name"
           defaultValue={modalMode === "edit" ? currentRecipe?.name : ""}
           className="mb-2 rounded-lg border border-slate-300 p-2"
+          required
         />
         <textarea
           name="description"
           placeholder="Description"
           defaultValue={modalMode === "edit" ? currentRecipe?.description : ""}
           className="mb-2 rounded-lg border border-slate-300 p-2"
+          required
         />
         <input
           type="number"
@@ -161,6 +167,7 @@ const CRUDRecipeModal = () => {
           className="mb-2 rounded-lg border border-slate-300 p-2"
           min={1}
           max={100}
+          required
         />
         <textarea
           name="ingredients"
@@ -169,23 +176,34 @@ const CRUDRecipeModal = () => {
             modalMode === "edit" ? currentRecipe?.ingredients.join(", ") : ""
           }
           className="mb-2 rounded-lg border border-slate-300 p-2"
+          required
         />
         <textarea
           name="instructions"
           placeholder="Instructions"
           defaultValue={modalMode === "edit" ? currentRecipe?.instructions : ""}
           className="mb-2 rounded-lg border border-slate-300 p-2"
+          required
         />
+        {modalMode === "edit" && currentRecipe?.image_url && (
+          <img
+            src={currentRecipe.image_url}
+            alt="Aktuelles Rezeptbild"
+            className="mb-2 h-32 w-auto rounded-lg object-cover"
+          />
+        )}
         <input
           type="file"
           name="recipe_image"
           placeholder="Image Upload"
           className="mb-2 rounded-lg border border-slate-300 p-2"
+          required={modalMode === "add"}
         />
         <select
           name="category_id"
           className="mb-2 rounded-lg border border-slate-300 p-2"
           defaultValue={modalMode === "edit" ? currentRecipe?.category_id : ""}
+          required
         >
           {categories &&
             categories.map((category) => (
