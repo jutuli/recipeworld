@@ -1,6 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { mainContext } from "../context/MainProvider";
 import { useContext } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 
 interface INavProps {
   isLoggedIn: boolean;
@@ -13,12 +15,15 @@ const Nav = () => {
 
   return (
     <div className="flex items-center justify-between border-t-12 border-t-amber-300 bg-white px-4 py-8">
-      <h3
-        className="cursor-pointer text-xl font-bold"
-        onClick={() => navigate("/")}
-      >
-        RecipeWorld
-      </h3>
+      <div className="flex items-center gap-2">
+        <FontAwesomeIcon icon={faUtensils} />
+        <h3
+          className="cursor-pointer text-xl font-bold"
+          onClick={() => navigate("/")}
+        >
+          RecipeWorld
+        </h3>
+      </div>
       <div className="mx-4 flex items-center gap-10">
         <ul className="flex gap-4">
           <NavLink
