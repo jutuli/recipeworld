@@ -4,6 +4,7 @@ import { mainContext } from "../context/MainProvider";
 import { Link } from "react-router-dom";
 import AddRecipe from "../components/AddRecipe";
 import supabase from "../utils/supabase";
+import MyFavoriteRecipes from "../components/MyFavoriteRecipes";
 
 interface IProfileProps {
   user: IUser | null;
@@ -60,7 +61,7 @@ const Profile = () => {
     <div className="flex w-full grow flex-col px-4">
       {isLoggedIn ? (
         <div className="align-start flex flex-col">
-          <h1 className="mb-4 text-lg font-bold">Profile</h1>
+          <h2 className="mb-4 text-2xl font-bold">About Me</h2>
           {!isEditing && (
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-2">
@@ -71,7 +72,7 @@ const Profile = () => {
                   <p>Email: {user?.email}</p>
                 </div>
                 <p className="text-sm italic">
-                  Need to edit your profile? Click{" "}
+                  Need to edit your details? Click{" "}
                   <span
                     onClick={handleEdit}
                     className="cursor-pointer font-bold text-amber-400 not-italic"
@@ -80,7 +81,9 @@ const Profile = () => {
                   </span>
                 </p>
               </div>
-              <AddRecipe />
+              <div className="mb-4 flex w-full justify-end px-4">
+                <AddRecipe />
+              </div>
             </div>
           )}
           {isEditing && (
@@ -149,6 +152,7 @@ const Profile = () => {
               </div>
             </form>
           )}
+          <MyFavoriteRecipes />
         </div>
       ) : (
         <div className="flex grow flex-col items-center justify-center">

@@ -1,17 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import supabase from "../utils/supabase";
-import { mainContext } from "../context/MainProvider";
+import { useMainContext } from "../context/MainProvider";
 import EditRecipe from "../components/EditRecipe";
-import { IRecipe } from "../interfaces/IRecipe";
-
-interface IRecipeProps {
-  currentRecipe: IRecipe | null;
-  setCurrentRecipe: (recipe: IRecipe | null) => void;
-  refreshRecipe: boolean;
-  setRefreshRecipe: (refreshRecipe: boolean) => void;
-  isLoggedIn: boolean;
-}
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark as solidBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark as regularBookmark } from "@fortawesome/free-regular-svg-icons";
 
 const Recipe = () => {
   const { id } = useParams();
@@ -21,7 +15,9 @@ const Recipe = () => {
     refreshRecipe,
     setRefreshRecipe,
     isLoggedIn,
-  } = useContext(mainContext) as IRecipeProps;
+    myFavoriteRecipes,
+    setMyFavoriteRecipes,
+  } = useMainContext();
 
   const [loadingRecipe, setLoadingRecipe] = useState<boolean>(true);
 
@@ -66,11 +62,44 @@ const Recipe = () => {
         <h3 className="my-4 text-center text-xl italic">
           {currentRecipe.description}
         </h3>
-        {isLoggedIn && (
-          <div className="flex justify-end">
-            <EditRecipe />
-          </div>
-        )}
+        <div className="flex items-center justify-end gap-6">
+          {isLoggedIn && (
+            <>
+              <FontAwesomeIcon
+                icon={
+                  myFavoriteRecipes?.some(
+                    (recipe) => recipe.id === currentRecipe.id,
+                  )
+                    ? solidBookmark
+                    : regularBookmark
+                }
+                className="cursor-pointer text-2xl text-amber-300"
+                onClick={() => {
+                  if (
+                    myFavoriteRecipes?.some(
+                      (recipe) => recipe.id === currentRecipe.id,
+                    )
+                  ) {
+                    setMyFavoriteRecipes(
+                      myFavoriteRecipes.filter(
+                        (recipe) => recipe.id !== currentRecipe.id,
+                      ),
+                    );
+                  } else {
+                    setMyFavoriteRecipes(
+                      myFavoriteRecipes
+                        ? [...myFavoriteRecipes, currentRecipe]
+                        : [currentRecipe],
+                    );
+                  }
+                }}
+              />
+              <div className="flex justify-end">
+                <EditRecipe />
+              </div>
+            </>
+          )}
+        </div>
         <div className="recipe-details flex flex-col gap-4">
           <p>This recipe is for {currentRecipe.servings} servings.</p>
           <div>
